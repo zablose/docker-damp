@@ -1,0 +1,18 @@
+FROM alpine:3.11
+
+ENV ENV=/root/.ashrc
+
+COPY ./docker/.ashrc /root/
+COPY ./docker/rsyslog.conf /etc/
+
+RUN apk add --no-cache \
+        rsyslog && \
+    rm -rf \
+        /tmp/* \
+        /var/cache/*
+
+EXPOSE 514
+
+WORKDIR /var/log/
+
+CMD ["/usr/sbin/rsyslogd", "-n", "-f", "/etc/rsyslog.conf"]

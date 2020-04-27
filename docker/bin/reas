@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+if [[ "$1" ]]
+then
+    rightsDir=750
+    rightsFile=640
+    if [[ "$2" ]]
+    then
+        rightsDir=$2
+    fi
+    if [[ "$3" ]]
+    then
+        rightsFile=$3
+    fi
+    find $1 -type d -print0 | xargs -0 chmod ${rightsDir}
+    find $1 -type f -print0 | xargs -0 chmod ${rightsFile}
+    chmod ${rightsDir} $1
+fi

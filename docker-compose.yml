@@ -1,0 +1,50 @@
+version: '3'
+services:
+
+  project-rsyslog:
+    build:
+      context: ./
+      dockerfile: ./docker/files/rsyslog.df
+    image: zablose-rsyslog:3.11
+    container_name: project-rsyslog
+    ports:
+      - '51400:514'
+    volumes:
+      - ./logs/:/var/log/
+
+  project-damp:
+    build:
+      context: ./
+      dockerfile: ./docker/files/damp.df
+      args:
+        - ARG_USER_ID=${ZDAMP_HOST_USER_ID:-1000}
+        - ARG_USER_NAME=${ZDAMP_HOST_USER_NAME}
+        - ARG_GROUP_ID=${ZDAMP_HOST_GROUP_ID:-1000}
+        - ARG_GROUP_NAME=${ZDAMP_HOST_GROUP_NAME}
+        - ARG_DB_NAME=${ZDAMP_DB_NAME_ALLOG:-laravel}
+        - ARG_DB_USER=${ZDAMP_DB_USER_ALLOG:-laravel}
+        - ARG_DB_PASSWORD=${ZDAMP_DB_PASSWORD:-qwerty}
+        - ARG_DOMAIN=${ZDAMP_DOMAIN:-project.zdamp}
+        - ARG_TIMEZONE=${ZDAMP_TIMEZONE:-Europe/London}
+    image: zablose-damp:10.3-php7.4
+    container_name: project-damp
+    ports:
+      - '18000:80'
+      - '44300:443'
+      - '33060:3306'
+    extra_hosts:
+      - 'project.zdamp:127.0.0.1'
+      - 'www.project.zdamp:127.0.0.1'
+    volumes:
+      - ./composer/cache/:/home/${ZDAMP_HOST_USER_NAME}/.composer/cache/
+      - ./web/:/home/web/
+    environment:
+      - HOST_USER_ID=${ZDAMP_HOST_USER_ID:-1000}
+      - HOST_GROUP_ID=${ZDAMP_HOST_GROUP_ID:-1000}
+    logging:
+      driver: syslog
+      options:
+        syslog-address: 'tcp://127.0.0.1:51400'
+        tag: 'docker/zablose-damp'
+    depends_on:
+      - project-rsyslog

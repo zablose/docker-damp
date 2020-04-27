@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+. $(dirname $0)/_exit-if-root.sh
+
+sudo phpenmod xdebug
+sudo /etc/init.d/apache2 restart

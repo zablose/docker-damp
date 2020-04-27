@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+. $(dirname $0)/_exit-if-root.sh
+
+web=/home/web
+
+sudo reas ${web} 750 640
+sudo chmod 750 ${web}
+sudo chown -R ${HOST_USER_ID}:${HOST_GROUP_ID} ${web}
+
+if [[ -f "${web}/artisan" ]]; then
+    reas ${web}/storage 770 660
+    reas ${web}/bootstrap/cache 770 660
+fi
+
+find ${web} -type d -name 'bin' -print0 | xargs -0 chmod -R 750
+
+#
+# Last line
+#
+# Add SETGID set-group-ID bit to folders to force parent group for new files and folders.
+#
+find ${web} -type d -print0 | xargs -0 chmod g+s
