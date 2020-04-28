@@ -3,15 +3,16 @@ FROM debian:10.3
 ENV DEBIAN_FRONTEND=noninteractive \
     ZDAMP_LOG=/var/log/zdamp.log
 
-ARG ARG_USER_ID
-ARG ARG_USER_NAME
+ARG ARG_DB_NAME
+ARG ARG_DB_PASSWORD
+ARG ARG_DB_USER
+ARG ARG_DOMAIN
 ARG ARG_GROUP_ID
 ARG ARG_GROUP_NAME
-ARG ARG_DB_NAME
-ARG ARG_DB_USER
-ARG ARG_DB_PASSWORD
-ARG ARG_DOMAIN
 ARG ARG_TIMEZONE
+ARG ARG_USER_ID
+ARG ARG_USER_NAME
+ARG ARG_WEB_ROOT
 
 RUN mkdir -p \
     /home/$ARG_USER_NAME/bin \
@@ -40,7 +41,7 @@ RUN touch $ZDAMP_LOG && chmod 666 $ZDAMP_LOG && \
         sudo \
         unzip \
         vim \
-        > /dev/null
+        > $ZDAMP_LOG
 
 RUN echo 'deb https://packages.sury.org/php/ buster main' > /etc/apt/sources.list.d/php.list && \
     curl -sS https://packages.sury.org/php/apt.gpg > /etc/apt/trusted.gpg.d/php.gpg \
@@ -56,7 +57,7 @@ RUN echo 'deb https://packages.sury.org/php/ buster main' > /etc/apt/sources.lis
         mariadb-server \
         nodejs \
         php7.4 \
-    > /dev/null \
+    >> $ZDAMP_LOG \
     && \
     npm install -g npm
 
@@ -71,7 +72,7 @@ RUN apt-get update && \
         php7.4-xml \
         php7.4-xsl \
         php7.4-zip \
-    > /dev/null
+    >> $ZDAMP_LOG
 
 RUN chmod 755 /usr/local/bin/* && \
     setup=/tmp/setup; \
@@ -83,7 +84,8 @@ RUN chmod 755 /usr/local/bin/* && \
     rm -rf \
         $setup \
     && \
-    apt-get clean
+    apt-get clean \
+    >> $ZDAMP_LOG
 
 USER $ARG_USER_NAME
 

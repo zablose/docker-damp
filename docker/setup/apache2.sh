@@ -3,6 +3,7 @@
 set -ev
 
 domain=${ARG_DOMAIN}
+web_root=${ARG_WEB_ROOT}
 certs=/etc/apache2/certs
 crt=${certs}/${domain}.crt
 key=${certs}/${domain}.key
@@ -55,9 +56,9 @@ tee -a /etc/apache2/sites-available/001-index.conf <<EOF
     ServerName ${domain}
     ServerAlias www.${domain}
     ServerAdmin admin@${domain}
-    DocumentRoot /home/web/public
+    DocumentRoot ${web_root}
 
-    <Directory "/home/web/public">
+    <Directory "${web_root}">
             RewriteEngine on
             RewriteBase /
             RewriteCond %{REQUEST_FILENAME} !-f
