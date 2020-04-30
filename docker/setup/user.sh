@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-set -ev
+set -e
 
 user_id=${ARG_USER_ID}
 user_name=${ARG_USER_NAME}
@@ -34,11 +34,6 @@ chmod 0440 ${file}
 cp /etc/skel/.bashrc ${home}/
 
 { \
-    echo "PATH=\$PATH:/home/$user_name/bin"; \
-    echo "PATH=\$PATH:/home/$user_name/.composer/vendor/bin"; \
-} | tee -a ${bashrc}
-
-{ \
     echo "alias lara-db-migrate-and-seed='php artisan migrate && php artisan db:seed'"; \
     echo "alias lara-db-fresh-and-seed='php artisan migrate:fresh && php artisan db:seed'"; \
     echo "alias phpunit='php vendor/bin/phpunit'"; \
@@ -57,3 +52,5 @@ if [[ ! -f "$home/.composer/vendor/bin/laravel" ]]; then
 fi
 
 r-user
+
+exit 0

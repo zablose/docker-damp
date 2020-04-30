@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-set -ev
+set -e
 
 file=/etc/mysql/mariadb.conf.d/50-server.cnf
 sed -i -e 's/^bind-address\s.*$/#bind-address = 127.0.0.1/' ${file}
-sed -i -e "s~^log_error\s.*$~log_error = $ZDEV_LOG~" ${file}
+sed -i -e "s~^log_error\s.*$~log_error = $ZDAMP_LOG~" ${file}
 
 /etc/init.d/mysql start && \
 mysql --user=root <<EOF
@@ -24,3 +24,5 @@ GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '${ARG_DB_PASSWORD}' WIT
 FLUSH PRIVILEGES;
 
 EOF
+
+exit 0

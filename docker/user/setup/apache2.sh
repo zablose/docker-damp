@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-set -ev
+set -e
 
-domain=${ARG_DOMAIN}
-web_root=${ARG_WEB_ROOT}
+domain=${WEB_DOMAIN}
+web_root=${WEB_ROOT}
 certs=/etc/apache2/certs
 crt=${certs}/${domain}.crt
 key=${certs}/${domain}.key
 
-mkdir ${certs}
+sudo mkdir -p ${certs}
 
-tee ${certs}/certs.conf <<EOF
+sudo tee ${certs}/certs.conf <<EOF
 
 [req]
 req_extensions     = req_ext
@@ -29,15 +29,20 @@ DNS.2 = *.${domain}
 
 EOF
 
-openssl req -x509 -config ${certs}/certs.conf -nodes -days 365 -newkey rsa:2048 -sha256 -keyout ${key} -out ${crt}
-ln -sr ${crt} /usr/local/share/ca-certificates/${domain}.crt
-update-ca-certificates
+sudo openssl req -x509 -config ${certs}/certs.conf -nodes -days 365 -newkey rsa:2048 -sha256 -keyout ${key} -out ${crt}
+sudo ln -srf ${crt} /usr/local/share/ca-certificates/${domain}.crt
+sudo update-ca-certificates
 
 file=/etc/apache2/apache2.conf
-sed -i -e 's~^<Directory\s/var/www/>$~<Directory /home/web/>~' ${file}
-sed -i -e "s~^ErrorLog.*$~ErrorLog $ZDAMP_LOG~" ${file}
+sudo sed -i -e 's~^<Directory\s/var/www/>$~<Directory /home/web/>~' ${file}
+sudo sed -i -e "s~^ErrorLog.*$~ErrorLog $ZDAMP_LOG~" ${file}
+sudo tee -a ${file} <<EOF
 
-tee -a /etc/apache2/sites-available/000-default.conf <<EOF
+    ServerName ${domain}
+
+EOF
+
+sudo tee /etc/apache2/sites-available/000-default.conf <<EOF
 <VirtualHost *:80>
 
     RewriteEngine On
@@ -49,7 +54,7 @@ tee -a /etc/apache2/sites-available/000-default.conf <<EOF
 # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
 EOF
 
-tee -a /etc/apache2/sites-available/001-index.conf <<EOF
+sudo tee /etc/apache2/sites-available/001-index.conf <<EOF
 <IfModule mod_ssl.c>
 <VirtualHost *:443>
 
@@ -74,9 +79,11 @@ tee -a /etc/apache2/sites-available/001-index.conf <<EOF
 # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
 EOF
 
-ln -sr /etc/apache2/sites-available/001-index.conf /etc/apache2/sites-enabled/001-index.conf
+sudo ln -srf /etc/apache2/sites-available/001-index.conf /etc/apache2/sites-enabled/001-index.conf
 
-ln -sr /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
-ln -sr /etc/apache2/mods-available/socache_shmcb.load /etc/apache2/mods-enabled/socache_shmcb.load
-ln -sr /etc/apache2/mods-available/ssl.load /etc/apache2/mods-enabled/ssl.load
-ln -sr /etc/apache2/mods-available/ssl.conf /etc/apache2/mods-enabled/ssl.conf
+sudo ln -srf /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
+sudo ln -srf /etc/apache2/mods-available/socache_shmcb.load /etc/apache2/mods-enabled/socache_shmcb.load
+sudo ln -srf /etc/apache2/mods-available/ssl.load /etc/apache2/mods-enabled/ssl.load
+sudo ln -srf /etc/apache2/mods-available/ssl.conf /etc/apache2/mods-enabled/ssl.conf
+
+exit 0

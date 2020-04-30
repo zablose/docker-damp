@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-set -ev
+set -e
 
 tee -a /etc/bash.bashrc <<EOF
 
@@ -36,8 +36,6 @@ set background=dark
 
 EOF
 
-echo ${ARG_TIMEZONE} > /etc/timezone && \
-rm /etc/localtime && \
-dpkg-reconfigure -f noninteractive tzdata
-
 echo "root:$(< /dev/urandom tr -dc '_A-Za-z0-9#!%' | head -c32)" | chpasswd
+
+exit 0

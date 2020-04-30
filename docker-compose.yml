@@ -20,13 +20,10 @@ services:
         - ARG_DB_NAME=${ZDAMP_DB_NAME:-laravel}
         - ARG_DB_PASSWORD=${ZDAMP_DB_PASSWORD:-qwerty}
         - ARG_DB_USER=${ZDAMP_DB_USER:-laravel}
-        - ARG_DOMAIN=${ZDAMP_DOMAIN:-project.zdev}
         - ARG_GROUP_ID=${ZDAMP_HOST_GROUP_ID:-1000}
         - ARG_GROUP_NAME=${ZDAMP_HOST_GROUP_NAME}
-        - ARG_TIMEZONE=${ZDAMP_TIMEZONE:-Europe/London}
         - ARG_USER_ID=${ZDAMP_HOST_USER_ID:-1000}
         - ARG_USER_NAME=${ZDAMP_HOST_USER_NAME}
-        - ARG_WEB_ROOT=/home/web/public
     image: zablose-damp:10.3-php7.4
     container_name: project-damp
     ports:
@@ -41,8 +38,11 @@ services:
       - ./web/:/home/web/
     environment:
       - APP_ROOT=/home/web
-      - HOST_USER_ID=${ZDAMP_HOST_USER_ID:-1000}
       - HOST_GROUP_ID=${ZDAMP_HOST_GROUP_ID:-1000}
+      - HOST_USER_ID=${ZDAMP_HOST_USER_ID:-1000}
+      - TIMEZONE=Europe/London
+      - WEB_DOMAIN=project.zdev
+      - WEB_ROOT=/home/web/public
     logging:
       driver: syslog
       options:

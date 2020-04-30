@@ -1,6 +1,10 @@
 # Docker DAMP
 
-Files necessary to build Docker container based on Debian with Apache2, MariaDB and PHP.
+Dockerized development environment based on Debian 10.3 with Apache2, MariaDB and PHP 7.4.
+
+With some extras:
+* Composer
+* npm
 
 ## License
 

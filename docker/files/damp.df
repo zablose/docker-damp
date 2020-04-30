@@ -6,19 +6,13 @@ ENV DEBIAN_FRONTEND=noninteractive \
 ARG ARG_DB_NAME
 ARG ARG_DB_PASSWORD
 ARG ARG_DB_USER
-ARG ARG_DOMAIN
 ARG ARG_GROUP_ID
 ARG ARG_GROUP_NAME
-ARG ARG_TIMEZONE
 ARG ARG_USER_ID
 ARG ARG_USER_NAME
-ARG ARG_WEB_ROOT
-
-RUN mkdir -p \
-    /home/$ARG_USER_NAME/bin \
-    /var/run/dbus
 
 COPY ./docker/user/bin/* /home/$ARG_USER_NAME/bin/
+COPY ./docker/user/setup/* /home/$ARG_USER_NAME/setup/
 COPY ./docker/bin/* /usr/local/bin/
 COPY ./docker/setup/* /tmp/setup/
 
@@ -79,8 +73,6 @@ RUN chmod 755 /usr/local/bin/* && \
     bash $setup/goodies.sh && \
     bash $setup/user.sh && \
     bash $setup/mariadb.sh && \
-    bash $setup/apache2.sh && \
-    bash $setup/php.sh && \
     rm -rf \
         $setup \
     && \
@@ -91,4 +83,4 @@ USER $ARG_USER_NAME
 
 WORKDIR /home/web
 
-ENTRYPOINT ["wrapper.sh"]
+ENTRYPOINT bash -i wrapper.sh

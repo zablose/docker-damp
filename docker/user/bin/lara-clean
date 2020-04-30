@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. $(dirname $0)/_exit-if-root.sh
+. $(dirname $0)/_exit-if-root
 
 if [[ "$1" == '--full' ]]
 then
