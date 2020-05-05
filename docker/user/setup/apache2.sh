@@ -58,8 +58,8 @@ sudo tee /etc/apache2/sites-available/001-index.conf <<EOF
 <IfModule mod_ssl.c>
 <VirtualHost *:443>
 
-    ServerName ${domain}
-    ServerAlias www.${domain}
+    ServerName www.${domain}
+    ServerAlias ${domain}
     ServerAdmin admin@${domain}
     DocumentRoot ${web_root}
 
@@ -85,5 +85,3 @@ sudo ln -srf /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/
 sudo ln -srf /etc/apache2/mods-available/socache_shmcb.load /etc/apache2/mods-enabled/socache_shmcb.load
 sudo ln -srf /etc/apache2/mods-available/ssl.load /etc/apache2/mods-enabled/ssl.load
 sudo ln -srf /etc/apache2/mods-available/ssl.conf /etc/apache2/mods-enabled/ssl.conf
-
-exit 0

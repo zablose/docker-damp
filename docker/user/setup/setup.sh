@@ -9,10 +9,13 @@ if [ -f "${lock}" ]; then
     exit 0
 fi
 
-bash $(dirname $0)/timezone.sh && \
-bash $(dirname $0)/apache2.sh && \
-bash $(dirname $0)/php.sh
+setup=$(dirname $0)
+bash ${setup}/timezone.sh
+bash ${setup}/apache2.sh
+bash ${setup}/php.sh
+
+add=$(dirname $0)
+bash ${add}/composer.sh
+bash ${add}/nodejs.sh
 
 touch ${lock}
-
-exit 0

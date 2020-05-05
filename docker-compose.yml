@@ -43,6 +43,9 @@ services:
       - TIMEZONE=Europe/London
       - WEB_DOMAIN=project.zdev
       - WEB_ROOT=/home/web/public
+      - ADD_COMPOSER=false
+      - ADD_LARAVEL=false
+      - ADD_NODEJS=false
     logging:
       driver: syslog
       options:

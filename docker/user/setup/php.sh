@@ -23,5 +23,3 @@ update /etc/php/7.4/apache2/php.ini
 update /etc/php/7.4/cli/php.ini
 
 sudo phpdismod xdebug
-
-exit 0

@@ -11,11 +11,6 @@ ARG ARG_GROUP_NAME
 ARG ARG_USER_ID
 ARG ARG_USER_NAME
 
-COPY ./docker/user/bin/* /home/$ARG_USER_NAME/bin/
-COPY ./docker/user/setup/* /home/$ARG_USER_NAME/setup/
-COPY ./docker/bin/* /usr/local/bin/
-COPY ./docker/setup/* /tmp/setup/
-
 RUN touch $ZDAMP_LOG && chmod 666 $ZDAMP_LOG && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -35,25 +30,17 @@ RUN touch $ZDAMP_LOG && chmod 666 $ZDAMP_LOG && \
         sudo \
         unzip \
         vim \
-        > $ZDAMP_LOG
+        >> $ZDAMP_LOG
 
 RUN echo 'deb https://packages.sury.org/php/ buster main' > /etc/apt/sources.list.d/php.list && \
     curl -sS https://packages.sury.org/php/apt.gpg > /etc/apt/trusted.gpg.d/php.gpg \
-    && \
-    file=/etc/apt/sources.list.d/nodesource.list; \
-    echo 'deb https://deb.nodesource.com/node_12.x buster main' > $file && \
-    echo 'deb-src https://deb.nodesource.com/node_12.x buster main' >> $file && \
-    curl -sS https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add \
     && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         apache2 \
         mariadb-server \
-        nodejs \
         php7.4 \
-    >> $ZDAMP_LOG \
-    && \
-    npm install -g npm
+    >> $ZDAMP_LOG
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -68,6 +55,11 @@ RUN apt-get update && \
         php7.4-zip \
     >> $ZDAMP_LOG
 
+COPY ./docker/user/bin/* /home/$ARG_USER_NAME/bin/
+COPY ./docker/user/setup/* /home/$ARG_USER_NAME/setup/
+COPY ./docker/bin/* /usr/local/bin/
+COPY ./docker/setup/* /tmp/setup/
+
 RUN chmod 755 /usr/local/bin/* && \
     setup=/tmp/setup; \
     bash $setup/goodies.sh && \
@@ -76,11 +68,10 @@ RUN chmod 755 /usr/local/bin/* && \
     rm -rf \
         $setup \
     && \
-    apt-get clean \
-    >> $ZDAMP_LOG
+    apt-get clean
 
 USER $ARG_USER_NAME
 
 WORKDIR /home/web
 
-ENTRYPOINT bash -i wrapper.sh
+ENTRYPOINT ["wrapper.sh"]

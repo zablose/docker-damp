@@ -2,8 +2,6 @@
 
 set -e
 
-echo ${TIMEZONE} | sudo tee /etc/timezone && \
-sudo rm /etc/localtime && \
+echo ${TIMEZONE} | sudo tee /etc/timezone
+sudo rm /etc/localtime
 sudo dpkg-reconfigure -f noninteractive tzdata
-
-exit 0
