@@ -74,4 +74,5 @@ USER $ARG_USER_NAME
 
 WORKDIR /home/web
 
-ENTRYPOINT ["wrapper.sh"]
+ENTRYPOINT ["bash"]
+CMD ["wrapper.sh"]

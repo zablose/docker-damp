@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -ev
+set -e
 
 if [[ "${ADD_COMPOSER}" != "true" ]]; then
     echo 'Skipping Composer installation ...'
