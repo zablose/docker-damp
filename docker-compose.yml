@@ -43,7 +43,7 @@ services:
       - TIMEZONE=Europe/London
       - WEB_DOMAIN=project.zdev
       - WEB_ROOT=/home/web/public
-      - ADD_COMPOSER=false
+      - ADD_COMPOSER=true
       - ADD_LARAVEL=false
       - ADD_NODEJS=false
     logging:
