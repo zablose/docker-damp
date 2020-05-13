@@ -7,6 +7,39 @@ With some extras:
 * laravel - Laravel installer
 * npm - Node Package Manager
 
+## Usage
+
+### Run Docker-DAMP
+
+    $ git clone https://github.com/zablose/docker-damp.git
+    $ cd docker-damp
+    $ docker-compose -p zdev up -d
+
+Check 'https://localhost:44300/' with your browser to see 'phpinfo()' output.
+
+### As Git Submodule
+
+    # Run this command inside your project root.
+    $ git submodule add https://github.com/zablose/docker-damp.git
+    $ cp docker-damp/docker-compose.yml .
+
+Amend 'docker-compose.yml' to your needs.
+Replace the prefix 'project' with your project name.
+
+ENVs to be aware of:
+
+| Name | Default | Description |
+| --- | --- | --- |
+| ADD_COMPOSER | true | Adds Composer into container if set to 'true'. |
+| ADD_LARAVEL | false | Adds Laravel installer if set to 'true' and Composer was added. |
+| ADD_NODEJS | false | Installs Node.js with npm if set to 'true'. |
+| APP_ROOT | /home/web | Used by 'r-web' script to restore permissions of the Laravel project. |
+| TIMEZONE | Europe/London | Sets timezone for Debian and PHP. |
+| WEB_DOMAIN | project.zdev | Domain name of your project. Used to setup Apache and generate self-signed certificates. |
+| WEB_ROOT | /home/web/public | Document root for Apache configuration. |
+
+Look at [zablose/captcha](https://github.com/zablose/captcha) for a usage example.
+
 ## Aliases
 
 `~/.bash_aliases`
@@ -36,22 +69,22 @@ Use `https://project.zdev:44300/` to access web from your host system.
 
 | Name | Default Value | Comment |
 | --- | --- | --- |
-| ZDAMP_HOST_USER_ID | 1000 |  |
-| ZDAMP_HOST_USER_NAME |  |  |
+| ZDAMP_HOST_USER_ID | 1000 | User ID on your host system. |
+| ZDAMP_HOST_USER_NAME |  | User name you use on your host system. Must deffer from DB user. Used to create DB user with root privileges. |
 | ZDAMP_HOST_GROUP_ID | 1000 | User `www-data` will be added to that group to get write access to some folders. |
-| ZDAMP_HOST_GROUP_NAME |  |  |
+| ZDAMP_HOST_GROUP_NAME |  | Group name on your host system. |
 | ZDAMP_DB_NAME | laravel |  |
 | ZDAMP_DB_USER | laravel |  |
-| ZDAMP_DB_PASSWORD | qwerty | For all users excluding root. |
+| ZDAMP_DB_PASSWORD | qwerty | For all users excluding root. Root has no password with access via socket only. |
 
 Append to `~/.bashrc`.
 
 ```bash
 export \
     ZDAMP_HOST_USER_ID=1000 \
-    ZDAMP_HOST_USER_NAME=zablose \
+    ZDAMP_HOST_USER_NAME=hostuser \
     ZDAMP_HOST_GROUP_ID=1000 \
-    ZDAMP_HOST_GROUP_NAME=zablose
+    ZDAMP_HOST_GROUP_NAME=hostgroup
 ```
 
 ## Goodies
