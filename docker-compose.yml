@@ -18,7 +18,7 @@ services:
       dockerfile: ./docker/files/damp.df
       args:
         - ARG_DB_NAME=${ZDAMP_DB_NAME:-laravel}
-        - ARG_DB_PASSWORD=${ZDAMP_DB_PASSWORD:-qwerty}
+        - ARG_DB_PASSWORD=${ZDAMP_DB_PASSWORD}
         - ARG_DB_USER=${ZDAMP_DB_USER:-laravel}
         - ARG_GROUP_ID=${ZDAMP_HOST_GROUP_ID:-1000}
         - ARG_GROUP_NAME=${ZDAMP_HOST_GROUP_NAME}

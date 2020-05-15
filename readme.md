@@ -15,7 +15,7 @@ With some extras:
     $ cd docker-damp
     $ docker-compose -p zdev up -d
 
-Check 'https://localhost:44300/' with your browser to see 'phpinfo()' output.
+Visit [https://localhost:44300/](https://localhost:44300/) to see output of 'phpinfo()' command.
 
 ### As Git Submodule
 
@@ -63,19 +63,22 @@ Append to `/etc/hosts` for remote access from Postman, Browser, etc.
 127.0.0.1       www.project.zdev
 ```
 
-Use `https://project.zdev:44300/` to access web from your host system.
+Use [https://project.zdev:44300/](https://project.zdev:44300/) to access web from your host system.
 
 ## Env
 
-| Name | Default Value | Comment |
+> ENVs `ZDAMP_HOST_USER_ID`, `ZDAMP_HOST_USER_NAME`, `ZDAMP_HOST_GROUP_ID` and `ZDAMP_HOST_GROUP_NAME` are used to avoid
+> problems, when some files modified inside or outside container and no longer accessible from host system or container.
+
+| Name | Default | Comment |
 | --- | --- | --- |
 | ZDAMP_HOST_USER_ID | 1000 | User ID on your host system. |
-| ZDAMP_HOST_USER_NAME |  | User name you use on your host system. Must deffer from DB user. Used to create DB user with root privileges. |
+| ZDAMP_HOST_USER_NAME |  | User name you use on your host system. Must deffer from DB user. Used to create DB user with root privileges and as user for web folders. |
 | ZDAMP_HOST_GROUP_ID | 1000 | User `www-data` will be added to that group to get write access to some folders. |
 | ZDAMP_HOST_GROUP_NAME |  | Group name on your host system. |
 | ZDAMP_DB_NAME | laravel |  |
 | ZDAMP_DB_USER | laravel |  |
-| ZDAMP_DB_PASSWORD | qwerty | For all users excluding root. Root has no password with access via socket only. |
+| ZDAMP_DB_PASSWORD |  | For all users excluding root. Root has no password with access via socket only. |
 
 Append to `~/.bashrc`.
 
@@ -84,7 +87,8 @@ export \
     ZDAMP_HOST_USER_ID=1000 \
     ZDAMP_HOST_USER_NAME=hostuser \
     ZDAMP_HOST_GROUP_ID=1000 \
-    ZDAMP_HOST_GROUP_NAME=hostgroup
+    ZDAMP_HOST_GROUP_NAME=hostgroup \
+    ZDAMP_DB_PASSWORD=
 ```
 
 ## Goodies
