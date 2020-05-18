@@ -1,20 +1,20 @@
 version: '3'
 services:
 
-  docker-damp-rsyslog:
+  project-rsyslog:
     build:
-      context: ./
+      context: ./docker-damp/
       dockerfile: ./docker/files/rsyslog.df
     image: zablose-rsyslog:3.11
-    container_name: docker-damp-rsyslog
+    container_name: project-rsyslog
     ports:
-      - '51400:514'
+      - '51402:514'
     volumes:
-      - ./logs/:/var/log/
+      - ./docker-damp/logs/:/var/log/
 
-  docker-damp-damp:
+  project-damp:
     build:
-      context: ./
+      context: ./docker-damp/
       dockerfile: ./docker/files/damp.df
       args:
         - ARG_DB_NAME=${ZDAMP_DB_NAME:-laravel}
@@ -25,17 +25,17 @@ services:
         - ARG_USER_ID=${ZDAMP_HOST_USER_ID:-1000}
         - ARG_USER_NAME=${ZDAMP_HOST_USER_NAME}
     image: zablose-damp:10.3-php7.4
-    container_name: docker-damp-damp
+    container_name: project-damp
     ports:
-      - '18000:80'
-      - '44300:443'
-      - '33060:3306'
+      - '18002:80'
+      - '44302:443'
+      - '33062:3306'
     extra_hosts:
-      - 'docker-damp.zdev:127.0.0.1'
-      - 'www.docker-damp.zdev:127.0.0.1'
+      - 'project.zdev:127.0.0.1'
+      - 'www.project.zdev:127.0.0.1'
     volumes:
-      - ./composer/cache/:/home/${ZDAMP_HOST_USER_NAME}/.composer/cache/
-      - ./web/:/home/web/
+      - ./docker-damp/composer/cache/:/home/${ZDAMP_HOST_USER_NAME}/.composer/cache/
+      - ./:/home/web/
     environment:
       - ADD_COMPOSER=true
       - ADD_LARAVEL=false
@@ -44,12 +44,12 @@ services:
       - HOST_GROUP_ID=${ZDAMP_HOST_GROUP_ID:-1000}
       - HOST_USER_ID=${ZDAMP_HOST_USER_ID:-1000}
       - TIMEZONE=Europe/London
-      - WEB_DOMAIN=docker-damp.zdev
+      - WEB_DOMAIN=project.zdev
       - WEB_ROOT=/home/web/public
     logging:
       driver: syslog
       options:
-        syslog-address: 'tcp://127.0.0.1:51400'
+        syslog-address: 'tcp://127.0.0.1:51402'
         tag: 'docker/zablose-damp'
     depends_on:
-      - docker-damp-rsyslog
+      - project-rsyslog

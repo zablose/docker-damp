@@ -21,7 +21,7 @@ Visit [https://localhost:44300/](https://localhost:44300/) to see output of 'php
 
     # Run this command inside your project root.
     $ git submodule add https://github.com/zablose/docker-damp.git
-    $ cp docker-damp/docker-compose.yml .
+    $ cp docker-damp/docker-compose-example.yml docker-compose.yml
 
 Amend 'docker-compose.yml' to your needs.
 Replace the prefix 'project' with your project name.
@@ -35,7 +35,7 @@ ENVs to be aware of:
 | ADD_NODEJS | false | Installs Node.js with npm if set to 'true'. |
 | APP_ROOT | /home/web | Used by 'r-web' script to restore permissions of the Laravel project. |
 | TIMEZONE | Europe/London | Sets timezone for Debian and PHP. |
-| WEB_DOMAIN | project.zdev | Domain name of your project. Used to setup Apache and generate self-signed certificates. |
+| WEB_DOMAIN | docker-damp.zdev | Domain name of your project. Used to setup Apache and generate self-signed certificates. |
 | WEB_ROOT | /home/web/public | Document root for Apache configuration. |
 
 Look at [zablose/captcha](https://github.com/zablose/captcha) for a usage example.
@@ -59,8 +59,8 @@ alias dc-up='docker-compose -p zdev up -d'
 Append to `/etc/hosts` for remote access from Postman, Browser, etc.
 
 ```
-127.0.0.1       project.zdev
-127.0.0.1       www.project.zdev
+127.0.0.1       docker-damp.zdev
+127.0.0.1       www.docker-damp.zdev
 ```
 
 Use [https://project.zdev:44300/](https://project.zdev:44300/) to access web from your host system.
@@ -85,9 +85,9 @@ Append to `~/.bashrc`.
 ```bash
 export \
     ZDAMP_HOST_USER_ID=1000 \
-    ZDAMP_HOST_USER_NAME=hostuser \
+    ZDAMP_HOST_USER_NAME= \
     ZDAMP_HOST_GROUP_ID=1000 \
-    ZDAMP_HOST_GROUP_NAME=hostgroup \
+    ZDAMP_HOST_GROUP_NAME= \
     ZDAMP_DB_PASSWORD=
 ```
 
@@ -112,7 +112,7 @@ Check `./logs/` folder.
 
 | Command | Description |
 | --- | --- |
-| docker exec -it project-zdev bash | Get into container, running Bash shell. |
+| docker exec -it docker-damp-damp bash | Get into container, running Bash shell. |
 | docker ps -a | List all containers. |
 
 ## License
