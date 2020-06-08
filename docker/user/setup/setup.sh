@@ -11,6 +11,7 @@ fi
 
 setup=$(dirname $0)
 bash ${setup}/timezone.sh
+bash ${setup}/mariadb.sh
 bash ${setup}/apache2.sh
 bash ${setup}/php.sh
 

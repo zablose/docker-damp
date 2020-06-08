@@ -17,9 +17,6 @@ services:
       context: ./
       dockerfile: ./docker/files/damp.df
       args:
-        - ARG_DB_NAME=${ZDAMP_DB_NAME:-laravel}
-        - ARG_DB_PASSWORD=${ZDAMP_DB_PASSWORD}
-        - ARG_DB_USER=${ZDAMP_DB_USER:-laravel}
         - ARG_GROUP_ID=${ZDAMP_HOST_GROUP_ID:-1000}
         - ARG_GROUP_NAME=${ZDAMP_HOST_GROUP_NAME}
         - ARG_USER_ID=${ZDAMP_HOST_USER_ID:-1000}
@@ -41,6 +38,9 @@ services:
       - ADD_LARAVEL=false
       - ADD_NODEJS=false
       - APP_ROOT=/home/web
+      - DB_NAME=${ZDAMP_DB_NAME:-laravel}
+      - DB_USER=${ZDAMP_DB_USER:-laravel}
+      - DB_PASSWORD=${ZDAMP_DB_PASSWORD}
       - HOST_GROUP_ID=${ZDAMP_HOST_GROUP_ID:-1000}
       - HOST_USER_ID=${ZDAMP_HOST_USER_ID:-1000}
       - TIMEZONE=Europe/London

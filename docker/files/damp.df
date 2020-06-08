@@ -64,7 +64,6 @@ RUN chmod 755 /usr/local/bin/* && \
     setup=/tmp/setup; \
     bash $setup/goodies.sh && \
     bash $setup/user.sh && \
-    bash $setup/mariadb.sh && \
     rm -rf \
         $setup \
     && \

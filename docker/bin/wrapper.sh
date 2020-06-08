@@ -11,7 +11,6 @@ wrapper_start()
         echo "$(now) Setting up ..."
         bash -i $HOME/setup/setup.sh
 
-
         echo "$(now) Starting MariaDB ..."
         sudo /etc/init.d/mysql start
 
