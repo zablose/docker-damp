@@ -2,7 +2,9 @@
 
 set -e
 
-if [[ "${ADD_NODEJS}" != "true" ]]; then
+. /home/$(whoami)/bin/_source-env-file
+
+if [[ "${DAMP_ADD_NODEJS}" != "true" ]]; then
     echo 'Skipping Node.js installation ...'
     exit 0
 fi
@@ -17,6 +19,6 @@ if [[ ! -f "${file}" ]]; then
     curl -sS https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add
 
     sudo apt-get update
-    sudo apt-get install -y --no-install-recommends nodejs >> $ZDAMP_LOG
+    sudo apt-get install -y --no-install-recommends nodejs >> $DAMP_LOG
     sudo npm install -g npm
 fi

@@ -1,24 +1,27 @@
 #!/usr/bin/env bash
 
 . $(dirname $0)/_exit-if-root
+. $(dirname $0)/_source-env-file
 
-web=/home/web
-app=${APP_ROOT}
+web_dir=${DAMP_WEB_DIR}
+web_app=${DAMP_WEB_APP}
+user_id=${DAMP_USER_ID}
+group_id=${DAMP_USER_GROUP_ID}
 
-sudo reas ${web} 750 640
-sudo chmod 750 ${web}
-sudo chown -R ${HOST_USER_ID}:${HOST_GROUP_ID} ${web}
+sudo reas ${web_dir} 750 640
+sudo chmod 750 ${web_dir}
+sudo chown -R ${user_id}:${group_id} ${web_dir}
 
-if [[ -f "${app}/artisan" ]]; then
-    reas ${app}/storage 770 660
-    reas ${app}/bootstrap/cache 770 660
+if [[ -f "${web_app}/artisan" ]]; then
+    reas ${web_app}/storage 770 660
+    reas ${web_app}/bootstrap/cache 770 660
 fi
 
-find ${web} -type d -name 'bin' -print0 | xargs -0 chmod -R 750
+find ${web_dir} -type d -name 'bin' -print0 | xargs -0 chmod -R 750
 
 #
 # Last line
 #
 # Add SETGID set-group-ID bit to folders to force parent group for new files and folders.
 #
-find ${web} -type d -print0 | xargs -0 chmod g+s
+find ${web_dir} -type d -print0 | xargs -0 chmod g+s

@@ -2,8 +2,13 @@
 
 set -e
 
-domain=${WEB_DOMAIN}
-web_root=${WEB_ROOT}
+. /home/$(whoami)/bin/_source-env-file
+
+domain=${DAMP_WEB_DOMAIN}
+log=${DAMP_LOG}
+web_dir=${DAMP_WEB_DIR}
+web_root=${DAMP_WEB_ROOT}
+
 certs=/etc/apache2/certs
 crt=${certs}/${domain}.crt
 key=${certs}/${domain}.key
@@ -34,8 +39,8 @@ sudo ln -srf ${crt} /usr/local/share/ca-certificates/${domain}.crt
 sudo update-ca-certificates
 
 file=/etc/apache2/apache2.conf
-sudo sed -i -e 's~^<Directory\s/var/www/>$~<Directory /home/web/>~' ${file}
-sudo sed -i -e "s~^ErrorLog.*$~ErrorLog $ZDAMP_LOG~" ${file}
+sudo sed -i -e "s~^<Directory\s/var/www/>$~<Directory ${web_dir}/>~" ${file}
+sudo sed -i -e "s~^ErrorLog.*$~ErrorLog ${log}~" ${file}
 sudo tee -a ${file} <<EOF
 
     ServerName ${domain}

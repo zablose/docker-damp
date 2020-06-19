@@ -2,7 +2,9 @@
 
 set -e
 
-if [[ "${ADD_COMPOSER}" != "true" ]]; then
+. /home/$(whoami)/bin/_source-env-file
+
+if [[ "${DAMP_ADD_COMPOSER}" != "true" ]]; then
     echo 'Skipping Composer installation ...'
     exit 0
 fi
@@ -15,7 +17,7 @@ if [[ ! -f "${composer}" ]]; then
     chmod 700 ${composer}
 fi
 
-if [[ "${ADD_LARAVEL}" != "true" ]]; then
+if [[ "${DAMP_ADD_LARAVEL}" != "true" ]]; then
     echo 'Skipping Laravel installation ...'
     exit 0
 fi

@@ -2,6 +2,11 @@
 
 set -e
 
+. /home/$(whoami)/bin/_source-env-file
+
+file=/etc/mysql/mariadb.conf.d/50-server.cnf
+sudo sed -i -e "s~^\(bind-address.*\)$~#\1~" ${file}
+
 sudo /etc/init.d/mysql start
 
 while [ ! -e "/var/run/mysqld/mysqld.sock" ]; do
@@ -10,16 +15,16 @@ done
 sleep 1
 
 sudo -- mysql <<EOF
-CREATE DATABASE IF NOT EXISTS ${DB_NAME}
+CREATE DATABASE IF NOT EXISTS ${DAMP_DB_NAME}
     DEFAULT CHARACTER SET utf8
     COLLATE utf8_unicode_ci;
 
-GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON ${DAMP_DB_NAME}.* TO '${DAMP_DB_USER}'@'%' IDENTIFIED BY '${DAMP_DB_PASSWORD}';
 
 USE mysql;
 DELETE FROM user WHERE User='';
 
-GRANT ALL PRIVILEGES ON *.* TO '${USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO '${DAMP_USER_NAME}'@'%' IDENTIFIED BY '${DAMP_DB_PASSWORD}' WITH GRANT OPTION;
 
 FLUSH PRIVILEGES;
 EOF

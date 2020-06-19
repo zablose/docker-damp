@@ -2,13 +2,15 @@
 
 set -e
 
+. /home/$(whoami)/bin/_source-env-file
+
 update()
 {
     sudo sed -i -e 's/^error_reporting\s.*$/error_reporting = E_ALL/' $1
     sudo sed -i -e 's/^display_errors\s.*$/display_errors = On/' $1
     sudo sed -i -e 's/^display_startup_errors\s.*$/display_startup_errors = On/' $1
-    sudo sed -i -e "s~^;error_log\s=\ssyslog$~error_log = $ZDAMP_LOG~" $1
-    sudo sed -i -e "s~^;date.timezone.*$~date.timezone = \"$TIMEZONE\"~" $1
+    sudo sed -i -e "s~^;error_log\s=\ssyslog$~error_log = ${DAMP_LOG}~" $1
+    sudo sed -i -e "s~^;date.timezone.*$~date.timezone = \"${DAMP_TIMEZONE}\"~" $1
 
     sudo tee -a $1 <<EOF
 

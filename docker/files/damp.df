@@ -1,17 +1,14 @@
 FROM debian:10.3
 
-ENV DEBIAN_FRONTEND=noninteractive \
-    ZDAMP_LOG=/var/log/zdamp.log
+ENV DEBIAN_FRONTEND=noninteractive
 
-ARG ARG_DB_NAME
-ARG ARG_DB_PASSWORD
-ARG ARG_DB_USER
-ARG ARG_GROUP_ID
-ARG ARG_GROUP_NAME
+ARG ARG_LOG
 ARG ARG_USER_ID
 ARG ARG_USER_NAME
+ARG ARG_USER_GROUP_ID
+ARG ARG_USER_GROUP_NAME
 
-RUN touch $ZDAMP_LOG && chmod 666 $ZDAMP_LOG && \
+RUN touch $ARG_LOG && chmod 666 $ARG_LOG && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         apt-transport-https \
@@ -30,7 +27,7 @@ RUN touch $ZDAMP_LOG && chmod 666 $ZDAMP_LOG && \
         sudo \
         unzip \
         vim \
-        >> $ZDAMP_LOG
+        >> $ARG_LOG
 
 RUN echo 'deb https://packages.sury.org/php/ buster main' > /etc/apt/sources.list.d/php.list && \
     curl -sS https://packages.sury.org/php/apt.gpg > /etc/apt/trusted.gpg.d/php.gpg \
@@ -40,7 +37,7 @@ RUN echo 'deb https://packages.sury.org/php/ buster main' > /etc/apt/sources.lis
         apache2 \
         mariadb-server \
         php7.4 \
-    >> $ZDAMP_LOG
+    >> $ARG_LOG
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -53,8 +50,9 @@ RUN apt-get update && \
         php7.4-xml \
         php7.4-xsl \
         php7.4-zip \
-    >> $ZDAMP_LOG
+    >> $ARG_LOG
 
+COPY ./.env /home/$ARG_USER_NAME/
 COPY ./docker/user/bin/* /home/$ARG_USER_NAME/bin/
 COPY ./docker/user/setup/* /home/$ARG_USER_NAME/setup/
 COPY ./docker/bin/* /usr/local/bin/

@@ -4,8 +4,8 @@ set -e
 
 user_id=${ARG_USER_ID}
 user_name=${ARG_USER_NAME}
-group_id=${ARG_GROUP_ID}
-group_name=${ARG_GROUP_NAME}
+group_id=${ARG_USER_GROUP_ID}
+group_name=${ARG_USER_GROUP_NAME}
 
 home=/home/${user_name}
 bashrc=${home}/.bashrc

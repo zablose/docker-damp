@@ -3,7 +3,6 @@
 set -e
 
 lock=$HOME/.setup.lock
-
 if [ -f "${lock}" ]; then
     echo "Lock file exists. Remove '${lock}' file to re-run setup."
     exit 0
