@@ -8,7 +8,7 @@ services:
     image: zablose-rsyslog:3.11
     container_name: docker-damp-rsyslog
     ports:
-      - '${PORT_SYSLOG}:514'
+      - '${DAMP_PORT_SYSLOG}:514'
     volumes:
       - ./logs/:/var/log/
 
@@ -18,40 +18,25 @@ services:
       dockerfile: ./docker/files/damp.df
       args:
         - ARG_LOG=${DAMP_LOG}
-        - ARG_USER_ID=${DAMP_USER_ID}
         - ARG_USER_NAME=${DAMP_USER_NAME}
-        - ARG_USER_GROUP_ID=${DAMP_USER_GROUP_ID}
-        - ARG_USER_GROUP_NAME=${DAMP_USER_GROUP_NAME}
-    image: zablose-damp:10.3-php7.4
+        - ARG_WEB_APP=${DAMP_WEB_APP}
+    image: zablose-damp:10.4-php7.4
     container_name: docker-damp-damp
     ports:
-      - '${PORT_HTTP}:80'
-      - '${PORT_HTTPS}:443'
-      - '${PORT_DB}:3306'
+      - '${DAMP_PORT_HTTP}:80'
+      - '${DAMP_PORT_HTTPS}:443'
+      - '${DAMP_PORT_DB}:3306'
     extra_hosts:
       - '${DAMP_WEB_DOMAIN}:127.0.0.1'
       - 'www.${DAMP_WEB_DOMAIN}:127.0.0.1'
     volumes:
+      - ./.env:/home/${DAMP_USER_NAME}/.env
       - ./composer/cache/:/home/${DAMP_USER_NAME}/.composer/cache/
       - ./web/:${DAMP_WEB_DIR}/
-    environment:
-      - DAMP_ADD_COMPOSER=${DAMP_ADD_COMPOSER}
-      - DAMP_ADD_LARAVEL=${DAMP_ADD_LARAVEL}
-      - DAMP_ADD_NODEJS=${DAMP_ADD_NODEJS}
-      - DAMP_TIMEZONE=${DAMP_TIMEZONE}
-      - DAMP_USER_ID=${DAMP_USER_ID}
-      - DAMP_USER_NAME=${DAMP_USER_NAME}
-      - DAMP_USER_GROUP_ID=${DAMP_USER_GROUP_ID}
-      - DAMP_USER_GROUP_NAME=${DAMP_USER_GROUP_NAME}
-      - DAMP_WEB_DOMAIN=${DAMP_WEB_DOMAIN}
-      - DAMP_WEB_DIR=${DAMP_WEB_DIR}
-      - DAMP_WEB_APP=${DAMP_WEB_APP}
-      - DAMP_WEB_ROOT=${DAMP_WEB_ROOT}
-      - DAMP_LOG=${DAMP_LOG}
     logging:
       driver: syslog
       options:
-        syslog-address: 'tcp://127.0.0.1:${PORT_SYSLOG}'
+        syslog-address: 'tcp://127.0.0.1:${DAMP_PORT_SYSLOG}'
         tag: 'docker/zablose-damp'
     depends_on:
       - docker-damp-rsyslog

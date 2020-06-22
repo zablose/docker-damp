@@ -1,18 +1,21 @@
-FROM debian:10.3
-
-ENV DEBIAN_FRONTEND=noninteractive
+FROM debian:10.4
 
 ARG ARG_LOG
-ARG ARG_USER_ID
 ARG ARG_USER_NAME
-ARG ARG_USER_GROUP_ID
-ARG ARG_USER_GROUP_NAME
+ARG ARG_WEB_APP
 
-RUN touch $ARG_LOG && chmod 666 $ARG_LOG && \
+ENV DAMP_LOG=$ARG_LOG \
+    DAMP_USER_NAME=$ARG_USER_NAME
+
+RUN touch $DAMP_LOG && chmod 666 $DAMP_LOG && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-        apt-transport-https \
         apt-utils \
+        >> $DAMP_LOG
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        apt-transport-https \
         bzip2 \
         ca-certificates \
         curl \
@@ -27,20 +30,19 @@ RUN touch $ARG_LOG && chmod 666 $ARG_LOG && \
         sudo \
         unzip \
         vim \
-        >> $ARG_LOG
+        >> $DAMP_LOG
 
 RUN echo 'deb https://packages.sury.org/php/ buster main' > /etc/apt/sources.list.d/php.list && \
-    curl -sS https://packages.sury.org/php/apt.gpg > /etc/apt/trusted.gpg.d/php.gpg \
-    && \
+    curl -sS https://packages.sury.org/php/apt.gpg > /etc/apt/trusted.gpg.d/php.gpg && \
     apt-get update && \
-    apt-get install -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         apache2 \
         mariadb-server \
         php7.4 \
-    >> $ARG_LOG
+    >> $DAMP_LOG
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         php-xdebug \
         php7.4-curl \
         php7.4-gd \
@@ -50,11 +52,11 @@ RUN apt-get update && \
         php7.4-xml \
         php7.4-xsl \
         php7.4-zip \
-    >> $ARG_LOG
+    >> $DAMP_LOG
 
-COPY ./.env /home/$ARG_USER_NAME/
-COPY ./docker/user/bin/* /home/$ARG_USER_NAME/bin/
-COPY ./docker/user/setup/* /home/$ARG_USER_NAME/setup/
+COPY ./.env /home/$DAMP_USER_NAME/
+COPY ./docker/user/bin/* /home/$DAMP_USER_NAME/bin/
+COPY ./docker/user/setup/* /home/$DAMP_USER_NAME/setup/
 COPY ./docker/bin/* /usr/local/bin/
 COPY ./docker/setup/* /tmp/setup/
 
@@ -67,9 +69,9 @@ RUN chmod 755 /usr/local/bin/* && \
     && \
     apt-get clean
 
-USER $ARG_USER_NAME
+USER $DAMP_USER_NAME
 
-WORKDIR /home/web
+WORKDIR $ARG_WEB_APP
 
 ENTRYPOINT ["bash"]
 CMD ["wrapper.sh"]

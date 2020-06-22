@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. $(dirname $0)/_exit-if-root
+. /usr/local/bin/exit-if-root
 
 sudo phpdismod xdebug
 sudo /etc/init.d/apache2 restart

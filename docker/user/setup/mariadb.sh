@@ -2,7 +2,8 @@
 
 set -e
 
-. /home/$(whoami)/bin/_source-env-file
+. /usr/local/bin/exit-if-root
+. /usr/local/bin/source-env-file
 
 file=/etc/mysql/mariadb.conf.d/50-server.cnf
 sudo sed -i -e "s~^\(bind-address.*\)$~#\1~" ${file}

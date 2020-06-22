@@ -2,9 +2,10 @@
 
 set -e
 
-file=$(dirname $0)/../.env
+file=$HOME/.env
 if [ ! -e "${file}" ]; then
     echo "Environment file '${file}' does not exist.";
     exit 1;
 fi
+
 source ${file}

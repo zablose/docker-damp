@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-. $(dirname $0)/_exit-if-root
-. $(dirname $0)/_source-env-file
+. /usr/local/bin/exit-if-root
+. /usr/local/bin/source-env-file
 
 web_dir=${DAMP_WEB_DIR}
 web_app=${DAMP_WEB_APP}

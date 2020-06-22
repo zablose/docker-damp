@@ -2,10 +2,13 @@
 
 set -e
 
-user_id=${ARG_USER_ID}
-user_name=${ARG_USER_NAME}
-group_id=${ARG_USER_GROUP_ID}
-group_name=${ARG_USER_GROUP_NAME}
+HOME=/home/${ARG_USER_NAME}
+. /usr/local/bin/source-env-file
+
+user_id=${DAMP_USER_ID}
+user_name=${DAMP_USER_NAME}
+group_id=${DAMP_USER_GROUP_ID}
+group_name=${DAMP_USER_GROUP_NAME}
 
 home=/home/${user_name}
 bashrc=${home}/.bashrc

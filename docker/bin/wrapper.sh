@@ -1,20 +1,15 @@
 #!/usr/bin/env bash
 
-now()
-{
-    echo $(date "+[%Y-%m-%d %H:%M:%S]")
-}
-
 wrapper_start()
 {
     {
-        echo "$(now) Setting up ..."
+        echo "Setting up ..."
         bash -i $HOME/setup/setup.sh
 
-        echo "$(now) Starting MariaDB ..."
+        echo "Starting MariaDB ..."
         sudo /etc/init.d/mysql start
 
-        echo "$(now) Starting Apache2 ..."
+        echo "Starting Apache2 ..."
         sudo /etc/init.d/apache2 start
     } >> ${DAMP_LOG} 2>&1
 }
@@ -22,20 +17,20 @@ wrapper_start()
 wrapper_stop()
 {
     {
-        echo "$(now) Stopping Apache2 ..."
+        echo "Stopping Apache2 ..."
         sudo /etc/init.d/apache2 stop
 
-        echo "$(now) Stopping MariaDB ..."
+        echo "Stopping MariaDB ..."
         sudo /etc/init.d/mysql stop
     } >> ${DAMP_LOG} 2>&1
 }
 
 tail -f ${DAMP_LOG} &
-echo "$(now) Tailing local log ..." >> ${DAMP_LOG} 2>&1
+echo "Tailing local log ..." >> ${DAMP_LOG} 2>&1
 
 wrapper_start
 
-echo "$(now) Waiting for termination signal to stop container gracefully." >> ${DAMP_LOG} 2>&1
+echo "Waiting for termination signal to stop container gracefully." >> ${DAMP_LOG} 2>&1
 
 trap "wrapper_stop; exit 0" SIGTERM
 while kill -0 "$$" > /dev/null 2>&1; do

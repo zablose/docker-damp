@@ -2,7 +2,8 @@
 
 set -e
 
-. /home/$(whoami)/bin/_source-env-file
+. /usr/local/bin/exit-if-root
+. /usr/local/bin/source-env-file
 
 if [[ "${DAMP_ADD_COMPOSER}" != "true" ]]; then
     echo 'Skipping Composer installation ...'
