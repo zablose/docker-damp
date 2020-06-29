@@ -1,17 +1,15 @@
 FROM debian:10.4
 
-ARG ARG_LOG
 ARG ARG_USER_NAME
 ARG ARG_WEB_APP
 
-ENV DAMP_LOG=$ARG_LOG \
-    DAMP_USER_NAME=$ARG_USER_NAME
+ARG ARG_LOG=/var/log/damp-image-build.log
 
-RUN touch $DAMP_LOG && chmod 666 $DAMP_LOG && \
+RUN touch $ARG_LOG && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         apt-utils \
-        >> $DAMP_LOG
+        >> $ARG_LOG
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -30,7 +28,7 @@ RUN apt-get update && \
         sudo \
         unzip \
         vim \
-        >> $DAMP_LOG
+        >> $ARG_LOG
 
 RUN echo 'deb https://packages.sury.org/php/ buster main' > /etc/apt/sources.list.d/php.list && \
     curl -sS https://packages.sury.org/php/apt.gpg > /etc/apt/trusted.gpg.d/php.gpg && \
@@ -39,7 +37,7 @@ RUN echo 'deb https://packages.sury.org/php/ buster main' > /etc/apt/sources.lis
         apache2 \
         mariadb-server \
         php7.4 \
-    >> $DAMP_LOG
+    >> $ARG_LOG
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -52,11 +50,11 @@ RUN apt-get update && \
         php7.4-xml \
         php7.4-xsl \
         php7.4-zip \
-    >> $DAMP_LOG
+    >> $ARG_LOG
 
-COPY ./.env /home/$DAMP_USER_NAME/
-COPY ./docker/user/bin/* /home/$DAMP_USER_NAME/bin/
-COPY ./docker/user/setup/* /home/$DAMP_USER_NAME/setup/
+COPY ./.env /home/$ARG_USER_NAME/
+COPY ./docker/user/bin/* /home/$ARG_USER_NAME/bin/
+COPY ./docker/user/setup/* /home/$ARG_USER_NAME/setup/
 COPY ./docker/bin/* /usr/local/bin/
 COPY ./docker/setup/* /tmp/setup/
 
@@ -69,7 +67,7 @@ RUN chmod 755 /usr/local/bin/* && \
     && \
     apt-get clean
 
-USER $DAMP_USER_NAME
+USER $ARG_USER_NAME
 
 WORKDIR $ARG_WEB_APP
 

@@ -14,9 +14,6 @@ alias ls='ls --color --group-directories-first'
 alias ll='ls -al --color --group-directories-first'
 alias top='htop'
 
-PATH=\$PATH:/home/${ARG_USER_NAME}/bin
-PATH=\$PATH:/home/${ARG_USER_NAME}/.composer/vendor/bin
-
 EOF
 
 tee -a /etc/skel/.bashrc <<EOF

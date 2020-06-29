@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
+. /usr/local/bin/exit-if-root
+. /usr/local/bin/source-env-file
+
 wrapper_start()
 {
     {
         echo "Setting up ..."
-        bash -i $HOME/setup/setup.sh
+        bash $HOME/setup/setup.sh
 
         echo "Starting MariaDB ..."
         sudo /etc/init.d/mysql start
@@ -26,7 +29,7 @@ wrapper_stop()
 }
 
 tail -f ${DAMP_LOG} &
-echo "Tailing local log ..." >> ${DAMP_LOG} 2>&1
+echo "Tailing log ..." >> ${DAMP_LOG} 2>&1
 
 wrapper_start
 

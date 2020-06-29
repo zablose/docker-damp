@@ -18,6 +18,4 @@ add=$(dirname $0)
 bash ${add}/composer.sh
 bash ${add}/nodejs.sh
 
-r-web
-
 touch ${lock}
