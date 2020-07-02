@@ -12,12 +12,17 @@ sudo reas ${web_dir} 750 640
 sudo chmod 750 ${web_dir}
 sudo chown -R ${user_id}:${group_id} ${web_dir}
 
-if [[ -f "${web_app}/artisan" ]]; then
+if [[ -f "${web_app}/artisan" ]]
+then
     reas ${web_app}/storage 770 660
     reas ${web_app}/bootstrap/cache 770 660
 fi
 
-find ${web_dir} -type d -name 'bin' -print0 | xargs -0 chmod -R 750
+for bin_dir in $(find ${web_dir} -type d -name 'bin')
+do
+    echo "${bin_dir}"
+    chmod -R 750 ${bin_dir}
+done
 
 #
 # Last line

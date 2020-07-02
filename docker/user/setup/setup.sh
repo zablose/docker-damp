@@ -19,3 +19,4 @@ bash ${add}/composer.sh
 bash ${add}/nodejs.sh
 
 touch ${lock}
+chmod 400 ${lock}

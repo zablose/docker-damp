@@ -41,7 +41,7 @@ EOF
 
 chown -R ${user_id}:${group_id} ${home}
 reas ${home} 700 600
-reas ${home}/bin 700 700
+reas ${home}/bin 700 500
 
 touch ${damp_log}
 chmod 666 ${damp_log}
