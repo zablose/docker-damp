@@ -22,7 +22,7 @@ services:
         - ARG_USER_GROUP_NAME=${DAMP_USER_GROUP_NAME}
         - ARG_USER_ID=${DAMP_USER_ID}
         - ARG_USER_NAME=${DAMP_USER_NAME}
-        - ARG_WEB_APP=${DAMP_WEB_APP}
+        - ARG_WEB_DIR=${DAMP_WEB_DIR}
     image: zablose-damp:10.4-php7.4
     container_name: project-damp
     ports:
