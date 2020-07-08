@@ -17,6 +17,10 @@ services:
       context: ./
       dockerfile: ./docker/files/damp.df
       args:
+        - ARG_DAMP_LOG=${DAMP_LOG}
+        - ARG_USER_GROUP_ID=${DAMP_USER_GROUP_ID}
+        - ARG_USER_GROUP_NAME=${DAMP_USER_GROUP_NAME}
+        - ARG_USER_ID=${DAMP_USER_ID}
         - ARG_USER_NAME=${DAMP_USER_NAME}
         - ARG_WEB_APP=${DAMP_WEB_APP}
     image: zablose-damp:10.4-php7.4

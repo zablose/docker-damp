@@ -86,7 +86,7 @@ Use [https://project.zdev:44300/](https://project.zdev:44300/) to access web fro
 | DAMP_USER_NAME |  | User name you use on your host system. Must deffer from DB user. Used to create DB user with root privileges and as user for web folders. |
 | DAMP_WEB_DOMAIN | docker-damp.zdev | Domain name of your project. Used to setup Apache and generate self-signed certificates. |
 | DAMP_WEB_DIR | /home/web |  |
-| DAMP_WEB_APP | /home/web/laravel | Used by 'r-web' script to restore permissions of the Laravel project. |
+| DAMP_WEB_APP | /home/web/laravel | Used by `r-web` script to restore permissions of the Laravel project. |
 | DAMP_WEB_ROOT | /home/web/laravel/public | Document root for Apache configuration. |
 
 ## Goodies

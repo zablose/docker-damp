@@ -1,5 +1,9 @@
 FROM debian:10.4
 
+ARG ARG_DAMP_LOG
+ARG ARG_USER_GROUP_ID
+ARG ARG_USER_GROUP_NAME
+ARG ARG_USER_ID
 ARG ARG_USER_NAME
 ARG ARG_WEB_APP
 
@@ -52,7 +56,6 @@ RUN apt-get update && \
         php7.4-zip \
     >> $ARG_LOG
 
-COPY ./.env /home/$ARG_USER_NAME/
 COPY ./docker/user/bin/* /home/$ARG_USER_NAME/bin/
 COPY ./docker/user/setup/* /home/$ARG_USER_NAME/setup/
 COPY ./docker/bin/* /usr/local/bin/
