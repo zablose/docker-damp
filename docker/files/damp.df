@@ -5,7 +5,7 @@ ARG ARG_USER_GROUP_ID
 ARG ARG_USER_GROUP_NAME
 ARG ARG_USER_ID
 ARG ARG_USER_NAME
-ARG ARG_WEB_APP
+ARG ARG_WEB_DIR
 
 ARG ARG_LOG=/var/log/damp-image-build.log
 
@@ -72,7 +72,7 @@ RUN chmod 755 /usr/local/bin/* && \
 
 USER $ARG_USER_NAME
 
-WORKDIR $ARG_WEB_APP
+WORKDIR $ARG_WEB_DIR
 
 ENTRYPOINT ["bash"]
 CMD ["wrapper.sh"]
