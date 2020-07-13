@@ -91,6 +91,10 @@ Use [https://project.zdev:44300/](https://project.zdev:44300/) to access web fro
 
 ## Goodies
 
+### Custom SQL
+
+Custom SQL script will be executed with root privileges, if mounted to `/home/${DAMP_USER_NAME}/db.sql` inside container.
+
 ### Logs
 
 Check `./logs/` folder.

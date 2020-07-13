@@ -15,6 +15,8 @@ while [ ! -e "/var/run/mysqld/mysqld.sock" ]; do
 done
 sleep 1
 
+echo 'Running default SQL ...'
+
 sudo -- mysql <<EOF
 CREATE DATABASE IF NOT EXISTS ${DAMP_DB_NAME}
     DEFAULT CHARACTER SET utf8
@@ -29,5 +31,13 @@ GRANT ALL PRIVILEGES ON *.* TO '${DAMP_USER_NAME}'@'%' IDENTIFIED BY '${DAMP_DB_
 
 FLUSH PRIVILEGES;
 EOF
+
+file=/home/${DAMP_USER_NAME}/db.sql
+if [ -e "${file}" ]; then
+    echo "Running custom SQL script ..."
+    sudo -- mysql < ${file}
+else
+    echo "Custom SQL script '${file}' not found. Skipping ..."
+fi
 
 sudo /etc/init.d/mysql stop
