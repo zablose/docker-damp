@@ -32,10 +32,10 @@ GRANT ALL PRIVILEGES ON *.* TO '${DAMP_USER_NAME}'@'%' IDENTIFIED BY '${DAMP_DB_
 FLUSH PRIVILEGES;
 EOF
 
-file=/home/${DAMP_USER_NAME}/db.sql
+file=/home/${DAMP_USER_NAME}/db.sql.sh
 if [ -e "${file}" ]; then
     echo "Running custom SQL script ..."
-    sudo -- mysql < ${file}
+    source ${file}
 else
     echo "Custom SQL script '${file}' not found. Skipping ..."
 fi
