@@ -37,6 +37,7 @@ services:
       - ./composer/cache/:/home/${DAMP_USER_NAME}/.composer/cache/
       - ./web/:${DAMP_WEB_DIR}/
       - ./db.sql.example.sh:/home/${DAMP_USER_NAME}/db.sql.sh
+      - ./app.example.sh:/home/${DAMP_USER_NAME}/app.sh
     logging:
       driver: syslog
       options:
