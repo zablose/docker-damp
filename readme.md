@@ -1,6 +1,6 @@
 # Docker DAMP
 
-Dockerized development environment based on Debian 10.4 with Apache 2.4, MariaDB 10.3 and PHP 7.4.
+Dockerized development environment based on Debian 10.5 with Apache 2.4, MariaDB 10.3 and PHP 7.4.
 
 With some extras:
 * composer - Dependency Manager for PHP
@@ -93,8 +93,13 @@ Use [https://project.zdev:44300/](https://project.zdev:44300/) to access web fro
 
 ### Custom SQL
 
-Custom SQL from Bash script will be executed with root privileges, if mounted to `/home/${DAMP_USER_NAME}/db.sql.sh`
+Custom SQL from Bash script will be executed, during DB setup, if mounted to `/home/${DAMP_USER_NAME}/db.sql.sh`
 inside container. Look at [db.sql.example.sh](./db.sql.example.sh).
+
+### Custom App Script
+
+Custom App script will be executed, during post setup, if mounted to `/home/${DAMP_USER_NAME}/app.sh` inside container.
+Look at [app.example.sh](./app.example.sh).
 
 ### Logs
 
