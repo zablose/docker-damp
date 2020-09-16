@@ -17,6 +17,9 @@ wrapper_start()
         echo "Starting Apache2 ..."
         sudo /etc/init.d/apache2 start
 
+        echo "Running post setup ..."
+        bash $HOME/setup/post-setup.sh
+
         echo "DAMP started!"
     } >> ${DAMP_LOG} 2>&1
 }

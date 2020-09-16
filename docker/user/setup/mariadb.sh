@@ -41,3 +41,7 @@ else
 fi
 
 sudo /etc/init.d/mysql stop
+
+while [ -e "/var/run/mysqld/mysqld.sock" ]; do
+    sleep 1
+done

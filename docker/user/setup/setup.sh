@@ -18,7 +18,5 @@ add=$(dirname $0)
 bash ${add}/composer.sh
 bash ${add}/nodejs.sh
 
-bash ${setup}/post-setup.sh
-
 touch ${lock}
 chmod 400 ${lock}
