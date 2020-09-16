@@ -36,6 +36,12 @@ If your project has `.env` file, copy `DAMP_*` envs over.
 
 Look at [zablose/captcha](https://github.com/zablose/captcha) for a usage example.
 
+### Update Git Submodule
+    
+    # Inside your project root.
+    $ git pull --recurse-submodules
+    $ git submodule update --remote --recursive
+
 ## Aliases
 
 `~/.bash_aliases`
