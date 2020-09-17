@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+
+while [ ! -e "/var/run/mysqld/mysqld.sock" ]; do
+    sleep 1
+done
+sleep 1

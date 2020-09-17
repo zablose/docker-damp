@@ -2,6 +2,8 @@
 
 set -e
 
+echo 'Some custom post setup actions ...'
+
 sudo -- mysql <<EOF
 
 CREATE DATABASE IF NOT EXISTS ${DAMP_EXAMPLE_DB_NAME}
@@ -20,3 +22,8 @@ CREATE TABLE IF NOT EXISTS ${DAMP_EXAMPLE_DB_TABLE}
     ENGINE = InnoDB;
 
 EOF
+
+cd ${DAMP_WEB_APP}
+
+mysql -V
+sudo mysql -e 'show databases;'

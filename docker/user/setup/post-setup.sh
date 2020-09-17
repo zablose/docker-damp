@@ -2,29 +2,23 @@
 
 set -e
 
-. /usr/local/bin/exit-if-root
-. /usr/local/bin/source-env-file
+bin=/usr/local/bin
 
-lock=$HOME/.post-setup.lock
-if [ -f "${lock}" ]; then
-    echo "Lock file exists. Remove '${lock}' file to re-run post setup."
-    exit 0
-fi
+. ${bin}/exit-if-root
+. ${bin}/exit-if-locked
+. ${bin}/source-env-file
+. ${bin}/wait-for-db-to-start
 
-while [ ! -e "/var/run/mysqld/mysqld.sock" ]; do
-    sleep 1
-done
-sleep 1
-
-file=/home/${DAMP_USER_NAME}/app.sh
+file=$HOME/post-setup.sh
 if [ -e "${file}" ]; then
     echo "Running custom post setup script ..."
-    source ${file}
+    . ${file}
 else
     echo "Custom post setup script '${file}' not found. Skipping ..."
 fi
 
-bash /home/${DAMP_USER_NAME}/bin/r-web
+bash $HOME/bin/r-web
 
+lock=$HOME/.setup.lock
 touch ${lock}
 chmod 400 ${lock}

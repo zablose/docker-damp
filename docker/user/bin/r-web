@@ -8,6 +8,8 @@ web_app=${DAMP_WEB_APP}
 user_id=${DAMP_USER_ID}
 group_id=${DAMP_USER_GROUP_ID}
 
+echo "Restoring permissions of web directory '${web_dir}' ..."
+
 sudo reas ${web_dir} 750 640
 sudo chmod 750 ${web_dir}
 sudo chown -R ${user_id}:${group_id} ${web_dir}
@@ -30,3 +32,5 @@ done
 # Add SETGID set-group-ID bit to folders to force parent group for new files and folders.
 #
 find ${web_dir} -type d -print0 | xargs -0 chmod g+s
+
+echo 'Permissions restored!'

@@ -36,12 +36,6 @@ If your project has `.env` file, copy `DAMP_*` envs over.
 
 Look at [zablose/captcha](https://github.com/zablose/captcha) for a usage example.
 
-### Update Git Submodule
-    
-    # Inside your project root.
-    $ git pull --recurse-submodules
-    $ git submodule update --remote --recursive
-
 ## Aliases
 
 `~/.bash_aliases`
@@ -97,15 +91,14 @@ Use [https://project.zdev:44300/](https://project.zdev:44300/) to access web fro
 
 ## Goodies
 
-### Custom SQL
+### Post Script
 
-Custom SQL from Bash script will be executed, during DB setup, if mounted to `/home/${DAMP_USER_NAME}/db.sql.sh`
-inside container. Look at [db.sql.example.sh](./db.sql.example.sh).
+> All variables from `.env` will be available inside the script.
 
-### Custom App Script
+Custom script will be executed at the end of the container setup, if mounted to `/home/${DAMP_USER_NAME}/post-setup.sh`.
+Setup runs only once, unless lock file removed.
 
-Custom App script will be executed, during post setup, if mounted to `/home/${DAMP_USER_NAME}/app.sh` inside container.
-Look at [app.example.sh](./app.example.sh).
+Look at [post-setup.example.sh](./post-setup.example.sh) for an example.
 
 ### Logs
 

@@ -58,6 +58,7 @@ RUN apt-get update && \
 
 COPY ./docker/user/bin/* /home/$ARG_USER_NAME/bin/
 COPY ./docker/user/setup/* /home/$ARG_USER_NAME/setup/
+COPY ./docker/user/install/* /home/$ARG_USER_NAME/install/
 COPY ./docker/bin/* /usr/local/bin/
 COPY ./docker/setup/* /tmp/setup/
 
