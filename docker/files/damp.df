@@ -46,6 +46,8 @@ RUN echo 'deb https://packages.sury.org/php/ buster main' > /etc/apt/sources.lis
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         php-xdebug \
+        php-uploadprogress \
+        php-apcu \
         php7.4-curl \
         php7.4-gd \
         php7.4-mbstring \

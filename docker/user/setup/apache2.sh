@@ -75,6 +75,8 @@ sudo tee /etc/apache2/sites-available/001-index.conf <<EOF
             RewriteCond %{REQUEST_FILENAME} !-f
             RewriteCond %{REQUEST_FILENAME} !-d
             RewriteRule ^(.*)\$ index.php?url=\$1 [QSA,L]
+
+            AllowOverride all
     </Directory>
 
     SSLCertificateFile ${crt}
