@@ -14,10 +14,10 @@ bashrc=${home}/.bashrc
 groupadd -r -g ${group_id} ${group_name}
 useradd -m -s /bin/bash -u ${user_id} -g ${group_name} ${user_name}
 adduser www-data ${group_name}
-echo "$user_name:$(< /dev/urandom tr -dc '_A-Za-z0-9#!%' | head -c32)" | chpasswd
+echo "${user_name}:$(< /dev/urandom tr -dc '_A-Za-z0-9#!%' | head -c32)" | chpasswd
 
 file=/etc/sudoers.d/${user_name}
-echo "$user_name ALL=(ALL) NOPASSWD: ALL" > ${file}
+echo "${user_name} ALL=(ALL) NOPASSWD: ALL" > ${file}
 chmod 0440 ${file}
 
 cp /etc/skel/.bashrc ${bashrc}
@@ -29,12 +29,14 @@ PATH=\$PATH:${home}/.composer/vendor/bin
 
 EOF
 
-{
-    echo "alias lara-db-migrate-and-seed='php artisan migrate && php artisan db:seed'"
-    echo "alias lara-db-fresh-and-seed='php artisan migrate:fresh && php artisan db:seed'"
-    echo "alias phpunit='php vendor/bin/phpunit'"
-    echo "alias phpunit-with-xdebug='php -d zend_extension=xdebug.so vendor/bin/phpunit'"
-} | tee ${home}/.bash_aliases
+tee -a ${home}/.bash_aliases <<EOF
+
+alias lara-db-migrate-and-seed='php artisan migrate && php artisan db:seed'
+alias lara-db-fresh-and-seed='php artisan migrate:fresh && php artisan db:seed'
+alias phpunit='php vendor/bin/phpunit'
+alias phpunit-with-xdebug='php -d zend_extension=xdebug.so vendor/bin/phpunit'
+
+EOF
 
 chown -R ${user_id}:${group_id} ${home}
 reas ${home} 700 600

@@ -30,6 +30,8 @@ tee -a /etc/vim/vimrc <<EOF
 let g:skip_defaults_vim = 1
 syntax on
 set background=dark
+set tabstop=4
+set expandtab
 
 EOF
 
