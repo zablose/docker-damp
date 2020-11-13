@@ -73,7 +73,8 @@ Use [https://project.zdev:44300/](https://project.zdev:44300/) to access web fro
 | DAMP_ADD_NODEJS | false | Installs Node.js with npm if set to `true`. |
 | DAMP_DB_NAME | damp | Database name. |
 | DAMP_DB_USER | damp | Database username. |
-| DAMP_DB_PASSWORD |  | For all users excluding root. Root has no password with access via socket only. |
+| DAMP_DB_PASSWORD | '' | For all users excluding root. Root has no password with access via socket only. |
+|  |  | Quotes are important. Won't work without in some cases, if complex password with special characters is in use. |
 | DAMP_LOG | /var/log/damp.log | Log file name inside container. |
 | DAMP_PORT_DB | 33060 | Port used to connect to the database from your host system. |
 | DAMP_PORT_HTTP | 18000 |  |
@@ -101,6 +102,8 @@ Setup runs only once, unless lock file removed.
 Look at [post-setup.example.sh](./post-setup.example.sh) for an example.
 
 ### Logs
+
+> On successful container creation last message will be `Waiting for termination signal to stop container gracefully.`.
 
 Check `./logs/` folder.
 
