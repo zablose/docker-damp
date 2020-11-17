@@ -68,6 +68,7 @@ Use [https://project.zdev:44300/](https://project.zdev:44300/) to access web fro
 
 | Name | Example | Comment |
 | --- | --- | --- |
+| DAMP_ADD_CHROME | false | Adds Google Chrome with driver into container, if set to `true`, to be used by Laravel Dusk. |
 | DAMP_ADD_COMPOSER | true | Adds Composer into container if set to `true`. |
 | DAMP_ADD_LARAVEL | false | Adds Laravel installer if set to `true` and Composer was added. |
 | DAMP_ADD_NODEJS | false | Installs Node.js with npm if set to `true`. |

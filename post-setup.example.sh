@@ -23,7 +23,10 @@ CREATE TABLE IF NOT EXISTS ${DAMP_EXAMPLE_DB_TABLE}
 
 EOF
 
-cd ${DAMP_WEB_APP}
-
 mysql -V
 sudo mysql -e 'show databases;'
+
+if [[ "${DAMP_ADD_CHROME}" == "true" ]]
+then
+    google-chrome --version
+fi

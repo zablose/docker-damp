@@ -31,3 +31,9 @@ GRANT ALL PRIVILEGES ON *.* TO '${DAMP_USER_NAME}'@'%' IDENTIFIED BY '${DAMP_DB_
 
 FLUSH PRIVILEGES;
 EOF
+
+sudo /etc/init.d/mysql stop
+
+while [ -e "/var/run/mysqld/mysqld.sock" ]; do
+    sleep 1
+done
