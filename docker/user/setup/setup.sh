@@ -16,3 +16,4 @@ bash ${setup}/php.sh
 install=$HOME/install
 bash ${install}/composer.sh
 bash ${install}/nodejs.sh
+bash ${install}/chrome.sh
