@@ -3,9 +3,10 @@
 Dockerized development environment based on Debian 10.6 with Apache 2.4, MariaDB 10.3 and PHP 7.4.
 
 With some extras:
-* composer - Dependency Manager for PHP
-* laravel - Laravel installer
-* npm - Node Package Manager
+* composer - Dependency manager for PHP.
+* laravel - Laravel installer.
+* npm - Node package manager.
+* google-chrome - Web browser to run Laravel Dusk tests.
 
 ## Usage
 
@@ -108,7 +109,20 @@ Look at [post-setup.example.sh](./post-setup.example.sh) for an example.
 
 Check `./logs/` folder.
 
+    $ tail -f logs/zablose-damp.log
+    
+    Or
+    
     $ tail -f logs/all.log
+
+Other logs to look at inside the container:
+
+| File | Comment |
+| --- | --- |
+| `/var/log/damp-chrome-driver-install.log` |  |
+| `/var/log/damp-chrome-install.log` |  |
+| `/var/log/damp-image-build.log` |  |
+| `/var/log/damp.log` | Same as 'logs/zablose-damp.log' on the host. |
 
 ### Scripts
 
@@ -125,6 +139,12 @@ Check `./logs/` folder.
 | --- | --- |
 | docker exec -it docker-damp-damp bash | Get into container, running Bash shell. |
 | docker ps -a | List all containers. |
+
+## Hints
+
+| Command | Description |
+| --- | --- |
+| sudo su - | Switch to root. |
 
 ## License
 
