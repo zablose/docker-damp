@@ -44,7 +44,13 @@ sudo sed -i -e "s~^<Directory\s/var/www/>$~<Directory ${web_dir}/>~" ${file}
 sudo sed -i -e "s~^ErrorLog.*$~ErrorLog ${log}~" ${file}
 sudo tee -a ${file} <<EOF
 
-    ServerName ${domain}
+ServerName ${domain}
+
+EOF
+
+sudo tee -a /etc/apache2/envvars <<EOF
+
+umask 007
 
 EOF
 
