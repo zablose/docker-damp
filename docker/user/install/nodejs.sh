@@ -21,8 +21,8 @@ file=/etc/apt/sources.list.d/nodesource.list
 if [[ ! -f "${file}" ]]
 then
     {
-        echo 'deb https://deb.nodesource.com/node_12.x buster main'
-        echo 'deb-src https://deb.nodesource.com/node_12.x buster main'
+        echo 'deb https://deb.nodesource.com/node_14.x buster main'
+        echo 'deb-src https://deb.nodesource.com/node_14.x buster main'
     } | sudo tee ${file} 1>/dev/null
 
     curl -sS https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add
