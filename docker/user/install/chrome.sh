@@ -38,6 +38,6 @@ then
     {
         sudo wget -O ${driver_file} ${driver_url}/${driver_version}/${driver_file} -o ${log}
         sudo unzip ${driver_file} chromedriver -d /usr/local/bin/
-        rm -f ${driver_file}
+        sudo rm -f ${driver_file}
     } | sudo tee -a ${log} 1>/dev/null
 fi
