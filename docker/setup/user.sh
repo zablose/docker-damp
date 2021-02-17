@@ -34,7 +34,7 @@ tee -a ${home}/.bash_aliases <<EOF
 alias lara-db-migrate-and-seed='php artisan migrate && php artisan db:seed'
 alias lara-db-fresh-and-seed='php artisan migrate:fresh && php artisan db:seed'
 alias phpunit='php vendor/bin/phpunit'
-alias phpunit-with-xdebug='php -d zend_extension=xdebug.so vendor/bin/phpunit'
+alias phpunit-with-xdebug='php -d zend_extension=xdebug.so -d xdebug.mode=coverage vendor/bin/phpunit'
 
 EOF
 
