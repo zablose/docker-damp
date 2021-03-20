@@ -22,7 +22,7 @@ xdebug.remote_host=`route | awk '/^default/ { print \$2 }'`
 EOF
 }
 
-update /etc/php/8.0/apache2/php.ini
-update /etc/php/8.0/cli/php.ini
+update /etc/php/7.4/apache2/php.ini
+update /etc/php/7.4/cli/php.ini
 
 sudo phpdismod xdebug
