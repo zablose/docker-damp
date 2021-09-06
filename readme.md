@@ -1,12 +1,12 @@
 # Docker DAMP
 
-Dockerized development environment based on Debian 10.8 with Apache 2.4, MariaDB 10.3 and PHP 8.0.
+Dockerized development environment based on Debian 10.10 with Apache 2.4, MariaDB 10.3 and PHP 8.0.
 
 With some extras:
 * composer - Dependency manager for PHP (latest).
 * laravel - Laravel installer (latest).
 * npm - Node package manager (v14.x).
-* google-chrome - Web browser to run Laravel Dusk tests (latest).
+* chromium - Web browser to run Laravel Dusk tests (92.0.4510.0).
 
 ## Usage
 
@@ -69,10 +69,11 @@ Use [https://project.zdev:44300/](https://project.zdev:44300/) to access web fro
 
 | Name | Example | Comment |
 | --- | --- | --- |
-| DAMP_ADD_CHROME | false | Adds Google Chrome with driver into container, if set to `true`, to be used by Laravel Dusk. |
+| DAMP_ADD_CHROMIUM | false | Adds Google Chromium with driver into container, if set to `true`, to be used by Laravel Dusk. |
 | DAMP_ADD_COMPOSER | true | Adds Composer into container if set to `true`. |
 | DAMP_ADD_LARAVEL | false | Adds Laravel installer if set to `true` and Composer was added. |
 | DAMP_ADD_NODEJS | false | Installs Node.js with npm if set to `true`. |
+| DAMP_CHROMIUM_POSITION | 883341 | Branch base position taken from [https://vikyd.github.io](https://vikyd.github.io/download-chromium-history-version/#/). |
 | DAMP_DB_NAME | damp | Database name. |
 | DAMP_DB_USER | damp | Database username. |
 | DAMP_DB_PASSWORD | '' | For all users excluding root. Root has no password with access via socket only. |
@@ -102,6 +103,14 @@ Custom script will be executed at the end of the container setup, if mounted to 
 Setup runs only once, unless lock file removed.
 
 Look at [post-setup.example.sh](./post-setup.example.sh) for an example.
+
+If you use Laravel Dusk, do not forget to symlink chromedriver:
+
+```
+cd ${DAMP_WEB_APP}/vendor/laravel/dusk/bin
+mv chromedriver-linux chromedriver-linux.bac
+ln -sr /usr/local/bin/chromedriver chromedriver-linux
+```
 
 ### Logs
 
