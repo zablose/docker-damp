@@ -6,7 +6,7 @@ With some extras:
 * composer - Dependency manager for PHP (latest).
 * laravel - Laravel installer (latest).
 * npm - Node package manager (v14.x).
-* google-chrome - Web browser to run Laravel Dusk tests (latest).
+* chromium - Web browser to run Laravel Dusk tests (92.0.4510.0).
 
 ## Usage
 
