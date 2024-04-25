@@ -26,7 +26,7 @@ RUN apt-get update && \
         gnupg2 \
         htop \
         libpng-dev \
-        linux-headers-amd64 \
+        linux-headers-"$(dpkg --print-architecture)" \
         make \
         net-tools \
         sudo \

@@ -5,7 +5,7 @@ services:
     build:
       context: ./
       dockerfile: ./docker/files/rsyslog.df
-    image: zablose-rsyslog:3.11
+    image: zablose-rsyslog:3.19.1
     container_name: docker-damp-rsyslog
     ports:
       - '${DAMP_PORT_SYSLOG}:514'
