@@ -1,6 +1,6 @@
 # Docker DAMP
 
-Dockerized development environment based on Debian 10.10 with Apache 2.4, MariaDB 10.3 and PHP 8.0.
+Dockerized development environment based on Debian 12.6 with Apache 2.4, MariaDB 10.11 and PHP 8.3.
 
 With some extras:
 * composer - Dependency manager for PHP (latest).

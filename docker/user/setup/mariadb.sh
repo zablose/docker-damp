@@ -8,7 +8,7 @@ set -e
 file=/etc/mysql/mariadb.conf.d/50-server.cnf
 sudo sed -i -e "s~^\(bind-address.*\)$~#\1~" ${file}
 
-sudo /etc/init.d/mysql start
+sudo /etc/init.d/mariadb start
 
 while [ ! -e "/var/run/mysqld/mysqld.sock" ]; do
     sleep 1
@@ -32,7 +32,7 @@ GRANT ALL PRIVILEGES ON *.* TO '${DAMP_USER_NAME}'@'%' IDENTIFIED BY '${DAMP_DB_
 FLUSH PRIVILEGES;
 EOF
 
-sudo /etc/init.d/mysql stop
+sudo /etc/init.d/mariadb stop
 
 while [ -e "/var/run/mysqld/mysqld.sock" ]; do
     sleep 1
