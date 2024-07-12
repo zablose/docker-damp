@@ -18,7 +18,7 @@ update()
 [xdebug]
 xdebug.remote_autostart=1
 xdebug.remote_enable=1
-xdebug.remote_host=$(route | awk '/^default/ { print \$2 }')
+xdebug.remote_host=$(route | awk '/^default/ { print $2 }')
 EOF
 }
 
